@@ -1,0 +1,4 @@
+[ ] cant make/create an empty order (with no menu items). have the api disallow the creation of this
+[ ] add to orders who made that order
+[ ] menu items in orders' items [] must be references, because if they'renot
+    then the user could create an order and have the price be changed
