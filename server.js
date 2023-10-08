@@ -1,15 +1,26 @@
 require('dotenv').config(); 
 const express = require('express'); 
 const mongoose = require('mongoose');
-
 const ROLES = require("./config/roles"); 
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
 
 const app = express();
+app.use(express.json()); 
+app.use(express.urlencoded());
+
+
+const routers = {
+    register: require("./routes/api/register"),
+}
+
+
+app.use('/register', routers.register);
+
 
 main().catch(err => console.log(err));
+
 
 async function main() {
     try {
@@ -20,76 +31,76 @@ async function main() {
         })
 
         /* ----------------------------- TEST DB MODELS ----------------------------- */
-        const User = require("./models/User");
-        const MenuItem = require("./models/MenuItem");
-        const Order = require("./models/Order");
+        // const User = require("./models/User");
+        // const MenuItem = require("./models/MenuItem");
+        // const Order = require("./models/Order");
 
-        await User.deleteMany({});
-        await MenuItem.deleteMany({});
-        await Order.deleteMany({});
-
-
-        const user = new User({
-            firstName: "Dev",
-            phone: 9811061693,
-            role: ROLES.Admin,
-        })
-
-        await user.save();
+        // await User.deleteMany({});
+        // await MenuItem.deleteMany({});
+        // await Order.deleteMany({});
 
 
-        const test = new User({
-            firstName: "testEmp",
-            lastName: "testEmp",
-            phone: 1234567890,
-            role: ROLES.Employee,
-        });
+        // const user = new User({
+        //     firstName: "Dev",
+        //     phone: 9811061693,
+        //     role: ROLES.Admin,
+        // })
 
-        await test.save();
-        // const invalidPhone = new User({
-        //     firstName: "testInvalidPhone",
-        //     lastName: "testInvalidPhone",
-        //     phone: 12345678,
+        // await user.save();
+
+
+        // const test = new User({
+        //     firstName: "testEmp",
+        //     lastName: "testEmp",
+        //     phone: 1234567890,
         //     role: ROLES.Employee,
         // });
+
+        // await test.save();
+        // // const invalidPhone = new User({
+        // //     firstName: "testInvalidPhone",
+        // //     lastName: "testInvalidPhone",
+        // //     phone: 12345678,
+        // //     role: ROLES.Employee,
+        // // });
         
-        // await invalidPhone.save(); 
+        // // await invalidPhone.save(); 
 
-        const burger = new MenuItem({
-            name: "Burger",
-            price: 120,
-            itemNumber: 1,
-        })
+        // const burger = new MenuItem({
+        //     name: "Burger",
+        //     price: 120,
+        //     itemNumber: 1,
+        // })
 
-        const pepsi = new MenuItem({
-            name: "Pepsi",
-            price: 50,
-            itemNumber: 2,
-        })
+        // const pepsi = new MenuItem({
+        //     name: "Pepsi",
+        //     price: 50,
+        //     itemNumber: 2,
+        // })
 
-        await burger.save();
-        await pepsi.save(); 
+        // await burger.save();
+        // await pepsi.save(); 
 
 
-        const menuItemIds = (await MenuItem.where()).map(mi => mi._id);
-        console.log({menuItemIds}); 
+        // const menuItemIds = (await MenuItem.where()).map(mi => mi._id);
+        // console.log({menuItemIds}); 
 
-        const [burgerId, pepsiId] = menuItemIds; 
+        // const [burgerId, pepsiId] = menuItemIds; 
 
-        const order = new Order({
-            items: [
-                {
-                    menuItemId: burgerId,
-                    quantity: 3,
-                },
-                {
-                    menuItemId: pepsiId,
-                    quantity: 1,
-                }
-            ],
-            customerId: user._id, 
-        })
-        await order.save()
+        // const order = new Order({
+        //     items: [
+        //         {
+        //             menuItemId: burgerId,
+        //             quantity: 3,
+        //         },
+        //         {
+        //             menuItemId: pepsiId,
+        //             quantity: 1,
+        //         }
+        //     ],
+        //     customerId: user._id, 
+        // })
+        // await order.save()
     
         /* -------------------------------------------------------------------------- */
 
