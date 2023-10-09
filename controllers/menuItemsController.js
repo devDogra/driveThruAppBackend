@@ -14,7 +14,7 @@ const getMenuItemById = async (req, res) => {
         res.json({ menuItem });
     } catch (err) {
         console.log(err.message);
-        return res.json({ error: err.message });
+        return res.json({ error: err.message, message: "Could not get menu item by ID" });
     }
 }
 
@@ -23,7 +23,7 @@ const getAllMenuItems = async (req, res) => {
         const allMenuItems = await MenuItem.find({});
         return res.json({ allMenuItems });
     } catch (err) {
-        return res.json({ error: err.message });
+        return res.json({ error: err.message, message: "Could not get all menu items" });
     }
 }
 
@@ -36,13 +36,28 @@ const createMenuItem = async (req, res) => {
         return res.status(201).json({success: "Menu Item created", menuItem: item})
     } catch(err) {
         console.log({...err}); 
-        return res.json({error: err.message});         
+        return res.json({error: err.message, message: "Could not create Menu Item"});         
     }
 
+}
+
+const deleteMenuItemById = async (req, res) => {
+    const id = req.params.id; 
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId) return res.status(400).json({ error: "The given ID is not a valid ObjectId" });
+
+    try {
+        await MenuItem.deleteOne({ _id: id });
+        return res.status(200).json({ success: "Item deleted succesfully" });
+    } catch(err) {
+        console.log(err); 
+        return res.status(400).json({error: err.message, message: "Could not delete menu item by ID" });
+    }
 }
 
 module.exports = {
     getAllMenuItems,
     getMenuItemById,
     createMenuItem,
+    deleteMenuItemById
 }

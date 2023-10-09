@@ -22,7 +22,8 @@ customer ***PAYS IN CASH***
     [x] GET (customer, emp, admin)
         GET /menuItems/ => all items
         GET /menuItems/:id
-    [ ] POST (admin; only admin can add new items to the menu)
+    [x] POST (admin; only admin can add new items to the menu)
+        [ ] cant create same item number items
     [ ] PUT/PATCH (admin)
     [ ] DELETE (admin)
             
