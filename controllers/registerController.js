@@ -5,7 +5,7 @@ const handleRegister = async (req, res) => {
     console.log("Registering..."); 
     let userData = req.body;
     if (userData.role && userData.role != ROLES.Customer) {
-        return res.status(401).json({message: "New accounts can only have the 'Customer' role"})
+        return res.status(401).json({error: "New accounts can only have the 'Customer' role"})
     }
 
     const user = new User(userData);

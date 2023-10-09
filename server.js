@@ -1,22 +1,26 @@
 require('dotenv').config(); 
 const express = require('express'); 
 const mongoose = require('mongoose');
+const morgan = require('morgan'); 
 const ROLES = require("./config/roles"); 
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
 
 const app = express();
+app.use(morgan('tiny'));
 app.use(express.json()); 
 app.use(express.urlencoded());
 
 
 const routers = {
     register: require("./routes/api/register"),
+    menuItems: require("./routes/api/menuItems"),
 }
 
 
 app.use('/register', routers.register);
+app.use('/menuItems', routers.menuItems);
 
 
 main().catch(err => console.log(err));

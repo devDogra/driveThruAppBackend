@@ -1,4 +1,34 @@
+customers make orders from the app
+emps see made orders on the app
+they prepare the order
+and when they deliver it to the drive thru window they mark it as delivered after the
+customer ***PAYS IN CASH***
+
+** admin have FULL ACCESS to all routes and functionalities **
+
 [ ] cant make/create an empty order (with no menu items). have the api disallow the creation of this
-[ ] add to orders who made that order
+[x] add to orders who made that order
 [ ] menu items in orders' items [] must be references, because if they'renot
     then the user could create an order and have the price be changed
+[ ] orders api
+    [ ] create order (customers can, admin can)
+    [ ] delete order (customers can cancel orders within 5 mins of making them)
+                    (potentially employees could also do this)
+                    (but have to keep track of cancelled/deleted orders...???? so should we soft delete ie just mark em as cancelled?)
+    [ ] put/patch order (both partial updates) (customers can within 5 mins of making them)
+                        (emps could potentially do this too after approval from cust, but that's for later)
+    [ ] get order (customers, emp both can
+[ ] menu items api
+    [ ] GET (customer, emp, admin)
+        GET /menuItems/ => all items
+        GET /menuItems/:id
+    [ ] POST (admin; only admin can add new items to the menu)
+    [ ] PUT/PATCH (admin)
+    [ ] DELETE (admin)
+            
+[ ] users api
+    [ ] GET (customer, emp, admin)
+    [ ] PUT/PATCH (customer)
+    [ ] DELETE (customer, admin)
+    [ ] POST (**handled in registration**)
+                     
