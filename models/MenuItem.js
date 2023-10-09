@@ -13,6 +13,7 @@ const MenuItemSchema = new Schema({
     itemNumber: {
         type: Number,
         required: true,  
+        unique: true,
     },
     price: {
         type: Number,
