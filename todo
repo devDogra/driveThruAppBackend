@@ -19,7 +19,7 @@ customer ***PAYS IN CASH***
                         (emps could potentially do this too after approval from cust, but that's for later)
     [ ] get order (customers, emp both can
 [ ] menu items api
-    [ ] GET (customer, emp, admin)
+    [x] GET (customer, emp, admin)
         GET /menuItems/ => all items
         GET /menuItems/:id
     [ ] POST (admin; only admin can add new items to the menu)
@@ -31,4 +31,7 @@ customer ***PAYS IN CASH***
     [ ] PUT/PATCH (customer)
     [ ] DELETE (customer, admin)
     [ ] POST (**handled in registration**)
-                     
+
+[ ] add authentication
+[ ] add user roles
+[ ] protect routes acesss by role

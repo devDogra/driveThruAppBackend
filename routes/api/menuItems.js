@@ -7,6 +7,7 @@ router.route('/:id')
 
 router.route('/')
     .get(menuItemsController.getAllMenuItems)
+    .post(menuItemsController.createMenuItem)
 
 
 module.exports = router; 
