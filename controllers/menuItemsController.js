@@ -18,6 +18,27 @@ const getMenuItemById = async (req, res) => {
     }
 }
 
+const updateMenuItemById = async (req, res) => {
+    const id = req.params.id;
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+
+    if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" })
+
+    const updatedItemData = req.body; 
+
+    try {
+        const itemToUpdate = await MenuItem.findById(id);
+        if (!itemToUpdate) return res.status(404).json({ error: "Menu item not found" });
+        const updatedItem = Object.assign(itemToUpdate, updatedItemData);
+        await updatedItem.save();
+    } catch(err) {
+        console.log(err); 
+        return res.status(400).json({ error: err, message: "Could not update item" });
+    }
+
+    return res.status(200).json({ success: "Menu item updated succesfully" }); 
+}
+
 const getAllMenuItems = async (req, res) => {
     try {
         const allMenuItems = await MenuItem.find({});
@@ -59,5 +80,6 @@ module.exports = {
     getAllMenuItems,
     getMenuItemById,
     createMenuItem,
-    deleteMenuItemById
+    deleteMenuItemById,
+    updateMenuItemById,
 }

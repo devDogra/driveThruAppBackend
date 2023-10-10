@@ -24,8 +24,8 @@ customer ***PAYS IN CASH***
         GET /menuItems/:id
     [x] POST (admin; only admin can add new items to the menu)
         [ ] cant create same item number items
-    [ ] PUT/PATCH (admin)
-    [ ] DELETE (admin)
+    [x] PUT (also handles partial updates) (admin) note: mongoose ignores updates to fields not defined in the schema
+    [x] DELETE (admin)
             
 [ ] users api
     [ ] GET (customer, emp, admin)

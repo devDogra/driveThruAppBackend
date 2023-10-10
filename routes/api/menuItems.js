@@ -5,6 +5,7 @@ const menuItemsController = require('../../controllers/menuItemsController');
 router.route('/:id')
     .get(menuItemsController.getMenuItemById)
     .delete(menuItemsController.deleteMenuItemById)
+    .put(menuItemsController.updateMenuItemById)
 
 
 router.route('/')
