@@ -30,10 +30,10 @@ customer ***PAYS IN CASH***
     [x] DELETE (admin)
             
 [ ] users api
-    [ ] GET (customer, emp, admin)
+    [x] GET (customer, emp, admin)
     [ ] PUT/PATCH (customer)
     [ ] DELETE (customer, admin)
-    [ ] POST (**handled in registration**)
+    [x] POST (**handled in registration**)
 
 [ ] add authentication
 [ ] add user roles
