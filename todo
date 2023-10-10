@@ -10,6 +10,7 @@ customer ***PAYS IN CASH***
 [x] add to orders who made that order
 [ ] menu items in orders' items [] must be references, because if they'renot
     then the user could create an order and have the price be changed
+
 [ ] orders api
     [ ] create order (customers can, admin can)
     [ ] delete order (customers can cancel orders within 5 mins of making them)
@@ -18,12 +19,13 @@ customer ***PAYS IN CASH***
     [ ] put/patch order (both partial updates) (customers can within 5 mins of making them)
                         (emps could potentially do this too after approval from cust, but that's for later)
     [ ] get order (customers, emp both can
-[ ] menu items api
+
+[x] menu items api
     [x] GET (customer, emp, admin)
         GET /menuItems/ => all items
         GET /menuItems/:id
     [x] POST (admin; only admin can add new items to the menu)
-        [ ] cant create same item number items
+        [x] cant create same item number items
     [x] PUT (also handles partial updates) (admin) note: mongoose ignores updates to fields not defined in the schema
     [x] DELETE (admin)
             

@@ -16,11 +16,13 @@ app.use(express.urlencoded());
 const routers = {
     register: require("./routes/api/register"),
     menuItems: require("./routes/api/menuItems"),
+    users: require("./routes/api/users"),
 }
 
 
 app.use('/register', routers.register);
 app.use('/menuItems', routers.menuItems);
+app.use('/users', routers.users);
 
 
 main().catch(err => console.log(err));
