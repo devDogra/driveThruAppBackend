@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const MenuItem = require("./MenuItem");
-
+// ORDER:
+// items: [OrderItem]
+// customerId: ObjectId
+// state: String - Pending | Prepared | Delivered
 const OrderItemSchema = new Schema({ _id : false });
 OrderItemSchema
     .add({

@@ -29,9 +29,9 @@ customer ***PAYS IN CASH***
     [x] PUT (also handles partial updates) (admin) note: mongoose ignores updates to fields not defined in the schema
     [x] DELETE (admin)
             
-[ ] users api
+[x] users api
     [x] GET (customer, emp, admin)
-    [ ] PUT/PATCH (customer [can edit his own details])
+    [x] PUT/PATCH (customer [can edit his own details])
     [x] DELETE (customer, admin)
     [x] POST (**handled in registration**)
 

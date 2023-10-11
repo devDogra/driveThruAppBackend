@@ -17,12 +17,14 @@ const routers = {
     register: require("./routes/api/register"),
     menuItems: require("./routes/api/menuItems"),
     users: require("./routes/api/users"),
+    orders: require("./routes/api/orders"),
 }
 
 
 app.use('/register', routers.register);
 app.use('/menuItems', routers.menuItems);
 app.use('/users', routers.users);
+app.use('/orders', routers.orders);
 
 
 main().catch(err => console.log(err));
