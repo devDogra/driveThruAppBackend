@@ -25,7 +25,8 @@ customer ***PAYS IN CASH***
                     (but have to keep track of cancelled/deleted orders...???? so should we soft delete ie just mark em as cancelled?)
     [ ] put/patch order (both partial updates) (customers can within 5 mins of making them)
                         (emps could potentially do this too after approval from cust, but that's for later)
-    [ ] get order (customers, emp both can
+    [x] get order(customers, emp both can)
+    [ ] get all orders (by user id optional)
 
 [x] menu items api
     [x] GET (customer, emp, admin)

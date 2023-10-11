@@ -26,6 +26,7 @@ const createOrder = async (req, res) => {
 
 }
 const updateOrderById = async (req, res) => {res.send("PUT /id")}
+
 const deleteOrderById = async (req, res) => {
     const id = req.params.id; 
     
@@ -57,7 +58,25 @@ const getOrderById = async (req, res) => {
     }
 
 }
-const getAllOrdersByUserId = async (req, res) => {res.send("GET /")}
+
+const getAllOrdersByUserId = async (req, res) => {
+    const userId = req.query.userId;
+    
+    const isValidCustomerId = mongoose.Types.ObjectId.isValid(userId); 
+    if (!isValidCustomerId) return res.status(400).json({ error: "Cannot fetch orders for an invalid customer ID" });
+
+    const queryFilter = userId ? { customerId: userId } : {} ;
+
+    try {
+        const orders = await Order.find(queryFilter);
+        let successMsg = "Orders found succesfully";
+        successMsg += userId ? " by user ID" : "";
+        return res.status(200).json({ success: successMsg, orders })
+    } catch(err) {
+        console.log(err.message); 
+        res.status(400).json({ error: err.message, message: "Could not get all orders by user ID" });
+    }
+}
 
 
 module.exports = {
