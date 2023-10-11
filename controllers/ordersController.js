@@ -25,7 +25,27 @@ const createOrder = async (req, res) => {
     }
 
 }
-const updateOrderById = async (req, res) => {res.send("PUT /id")}
+const updateOrderById = async (req, res) => {
+    const id = req.params.id; 
+
+    const isValidId = mongoose.Types.ObjectId.isValid(id); 
+    if (!isValidId) return res.status(400).json({ error: "The given ID is an invalid ObjectId" });
+
+    const updatedData = req.body;
+    let updateResult = null;
+    try {
+        const order = await Order.findById(id);
+        if (!order) return res.status(404).json({ error: "Order not found" });
+        const updatedOrder = Object.assign(order, updatedData);
+        updateResult = await updatedOrder.save();
+    } catch(err) {
+        console.log(err.message); 
+        return res.status(400).json({ error: err.message, message: "Could not update order by ID" });
+    }
+
+    return res.status(200).json({ success: "Order updated succesfully", updatedOrder: updateResult }); 
+
+}
 
 const deleteOrderById = async (req, res) => {
     const id = req.params.id; 
@@ -63,7 +83,7 @@ const getAllOrdersByUserId = async (req, res) => {
     const userId = req.query.userId;
     
     const isValidCustomerId = mongoose.Types.ObjectId.isValid(userId); 
-    if (!isValidCustomerId) return res.status(400).json({ error: "Cannot fetch orders for an invalid customer ID" });
+    if (userId && !isValidCustomerId) return res.status(400).json({ error: "Cannot fetch orders for an invalid customer ID" });
 
     const queryFilter = userId ? { customerId: userId } : {} ;
 
