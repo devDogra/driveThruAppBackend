@@ -6,6 +6,13 @@ customer ***PAYS IN CASH***
 
 ** admin have FULL ACCESS to all routes and functionalities **
 
+------------------------------------------------
+    all these api calls have a lot of repetition even for diff resources....
+    for eg: there's always a valid id check and stuff and the same
+    resps being sent, the only diff being the name of the resource
+    in the resp msgs 
+------------------------------------------------
+
 [ ] cant make/create an empty order (with no menu items). have the api disallow the creation of this
 [x] add to orders who made that order
 [ ] menu items in orders' items [] must be references, because if they'renot
@@ -13,7 +20,7 @@ customer ***PAYS IN CASH***
 
 [ ] orders api
     [x] create order (customers can, admin can)
-    [ ] delete order (customers can cancel orders within 5 mins of making them)
+    [x] delete order (customers can cancel orders within 5 mins of making them)
                     (potentially employees could also do this)
                     (but have to keep track of cancelled/deleted orders...???? so should we soft delete ie just mark em as cancelled?)
     [ ] put/patch order (both partial updates) (customers can within 5 mins of making them)

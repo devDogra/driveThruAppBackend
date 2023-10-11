@@ -39,9 +39,24 @@ const deleteOrderById = async (req, res) => {
         console.log(err.message); 
         return res.status(400).json({ error: err.message, message: "Could not delete order" });
     }
-    
+
 }
-const getOrderById = async (req, res) => {res.send("GET /id")}
+const getOrderById = async (req, res) => {
+    const id = req.params.id; 
+    
+    const isValidId = mongoose.Types.ObjectId.isValid(id); 
+    if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" }); 
+
+    try {
+        const order = await Order.findById(id);
+        if (!order) return res.status(404).json({ error: "Order not found" });
+        return res.status(200).json({ success: "Order found succesfully", order });
+    } catch(err) {
+        console.log(err.message); 
+        res.status(400).json({ error: err.message, message: "Could not get order by ID" });
+    }
+
+}
 const getAllOrdersByUserId = async (req, res) => {res.send("GET /")}
 
 
