@@ -3,6 +3,20 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const MenuItem = require("./MenuItem");
+// ORDERITEM: 
+// quantity: Number
+// menuItemId 
+
+const sampleOrder = {
+    items: [
+        { quantity: 2, menuItemId: "<id1>" },
+        { quantity: 1, menuItemId: "<id2>" },
+        { quantity: 1, menuItemId: "<id3>" },
+    ],
+    customerId: "<id4>",
+    state: "Pending"
+}
+
 // ORDER:
 // items: [OrderItem]
 // customerId: ObjectId
