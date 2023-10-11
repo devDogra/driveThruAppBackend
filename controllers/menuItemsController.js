@@ -8,6 +8,7 @@ const getMenuItemById = async (req, res) => {
 
     if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" })
 
+
     try {
         const menuItem = await MenuItem.findById(id);
         console.log({ menuItem });
@@ -26,17 +27,18 @@ const updateMenuItemById = async (req, res) => {
 
     const updatedItemData = req.body; 
 
+    let updateResult = null;
     try {
         const itemToUpdate = await MenuItem.findById(id);
         if (!itemToUpdate) return res.status(404).json({ error: "Menu item not found" });
         const updatedItem = Object.assign(itemToUpdate, updatedItemData);
-        await updatedItem.save();
+        updateResult = await updatedItem.save();
     } catch(err) {
         console.log(err); 
         return res.status(400).json({ error: err, message: "Could not update item" });
     }
 
-    return res.status(200).json({ success: "Menu item updated succesfully" }); 
+    return res.status(200).json({ success: "Menu item updated succesfully", updatedMenuItem: updateResult }); 
 }
 
 const getAllMenuItems = async (req, res) => {
