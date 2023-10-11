@@ -27,7 +27,6 @@ app.use('/users', routers.users);
 
 main().catch(err => console.log(err));
 
-
 async function main() {
     try {
         await mongoose.connect(DB_URI); 

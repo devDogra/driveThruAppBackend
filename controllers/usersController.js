@@ -43,8 +43,29 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const updateUserById = async (req, res) => {
+    const id = req.params.id; 
+    const updatedData = req.body; 
+    
+    const isValidId = mongoose.Types.ObjectId.isValid(id); 
+    if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" });
+
+    let updateResult = null;
+    try {
+        const user = await User.findById(id); 
+        if (!user) return res.status(404).json({ error: "User not found" })
+        const updatedUser = Object.assign(user, updatedData); 
+        updateResult =  await updatedUser.save();
+    } catch(err) {
+        return res.status(400).json({ error: err.message, message: "Could not update user" });
+    }
+
+    return res.status(200).json({ success: "User updated succesfully ", updatedUser: updateResult});
+}
+
 module.exports = {
     getUserById,
     getAllUsers,
     deleteUserById,
+    updateUserById,
 }

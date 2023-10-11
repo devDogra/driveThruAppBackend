@@ -31,8 +31,8 @@ customer ***PAYS IN CASH***
             
 [ ] users api
     [x] GET (customer, emp, admin)
-    [ ] PUT/PATCH (customer)
-    [ ] DELETE (customer, admin)
+    [ ] PUT/PATCH (customer [can edit his own details])
+    [x] DELETE (customer, admin)
     [x] POST (**handled in registration**)
 
 [ ] add authentication
