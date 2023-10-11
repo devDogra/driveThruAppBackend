@@ -12,7 +12,7 @@ customer ***PAYS IN CASH***
     then the user could create an order and have the price be changed
 
 [ ] orders api
-    [ ] create order (customers can, admin can)
+    [x] create order (customers can, admin can)
     [ ] delete order (customers can cancel orders within 5 mins of making them)
                     (potentially employees could also do this)
                     (but have to keep track of cancelled/deleted orders...???? so should we soft delete ie just mark em as cancelled?)
