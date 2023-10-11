@@ -11,8 +11,9 @@ const getMenuItemById = async (req, res) => {
 
     try {
         const menuItem = await MenuItem.findById(id);
+        if (!menuItem) return res.status(404).json({ error: "Menu item not found" });
         console.log({ menuItem });
-        res.json({ menuItem });
+        return res.json({ menuItem });
     } catch (err) {
         console.log(err.message);
         return res.json({ error: err.message, message: "Could not get menu item by ID" });
