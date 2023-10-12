@@ -1,5 +1,7 @@
 const ROLES = require("../config/roles.json");
 const User = require("../models/User")
+const bcrypt = require('bcrypt'); 
+const { saltRounds } = require('../config/bcryptConfig.json');
 
 const handleRegister = async (req, res) => {
     console.log("Registering..."); 
