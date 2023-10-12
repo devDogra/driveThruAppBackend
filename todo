@@ -45,5 +45,21 @@ customer ***PAYS IN CASH***
     [x] POST (**handled in registration**)
 
 [ ] add authentication
+we'll use the user's 'email' field as the username
+    [ ] add the password field to the user model/schema
+    [ ] add validation to email to ensure that it's a valid email
+    [ ] add validation to password to ensure that the password is atleast 8 characters long
+        - but cant add it on the schema because that will store the **HASHED** password, so we have to validate the password length from the api
+    [ ] at the register/ route's controller, hash the received password and store THAT in the DB
+    [ ] make a /login or /authenticate route which receieves a { email, password } and sends back an access token with the payload { email } 
+    and also a refresh token with the payload { email }
+    the acc token must have a short expiry (keep it 1 min) for dev 
+    the refresh token must have a longer expiry (hours)
+    [ ] make a /refreshToken route that takes in a refresh toen, verifies it and if it's valid then it sends back an access token 
+    [ ] PROTECT ROUTES 
+        [ ] make middleware that verifies if a jwt is valid (name it verifyJWT or ensureAuthenticated [ I'm liking the first name more and more] ) the middleware must take a req, get the access token sent as a cookie in the req, chck if it's valid, and if it is, allow the ececution of the next() middlewares. if it's not valid then  then it must send back a response indicating so. 
+
+
+    
 [ ] add user roles
 [ ] protect routes acesss by role
