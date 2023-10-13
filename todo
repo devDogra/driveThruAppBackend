@@ -45,9 +45,9 @@ customer ***PAYS IN CASH***
     [x] POST (**handled in registration**)
 
 [ ] add authentication
-we'll use the user's 'email' field as the username
-    [ ] add the password field to the user model/schema
-    [ ] add validation to email to ensure that it's a valid email
+we'll use the user's 'phone' field as the username
+    [x] add the password field to the user model/schema
+    [ ] [bypass for now]  add validation to email to ensure that it's a valid email (bypassing for now bc not using email as the username)
     [ ] add validation to password to ensure that the password is atleast 8 characters long
         - but cant add it on the schema because that will store the **HASHED** password, so we have to validate the password length from the api
     [ ] at the register/ route's controller, hash the received password and store THAT in the DB
