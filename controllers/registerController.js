@@ -2,6 +2,7 @@ const ROLES = require("../config/roles.json");
 const User = require("../models/User")
 const bcrypt = require('bcrypt'); 
 const { saltRounds } = require('../config/bcryptConfig.json');
+const isStrongPassword = require('../utils/isStrongPassword');
 
 const handleRegister = async (req, res) => {
     console.log("Registering..."); 
@@ -9,9 +10,13 @@ const handleRegister = async (req, res) => {
     if (userData.role && userData.role != ROLES.Customer) {
         return res.status(401).json({error: "New accounts can only have the 'Customer' role"})
     }
+
+    const password = userData.password; 
+    const { strong, error } = isStrongPassword(password)
+    if (error) return res.status(403).json({ error });
+    
     
     try {
-        const password = userData.password; 
         const hashedPassword = await bcrypt.hash(password, saltRounds)
         userData.password = hashedPassword; 
     } catch(err) {

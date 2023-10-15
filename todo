@@ -55,9 +55,15 @@ we'll use the user's 'phone' field as the username
     and also a refresh token with the payload { email }
     the acc token must have a short expiry (keep it 1 min) for dev 
     the refresh token must have a longer expiry (hours)
-    [ ] make a /refreshToken route that takes in a refresh toen, verifies it and if it's valid then it sends back an access token 
+    [x] make a /refreshToken route that takes in a refresh toen, verifies it and if it's valid then it sends back an access token 
     [ ] PROTECT ROUTES 
         [ ] make middleware that verifies if a jwt is valid (name it verifyJWT or ensureAuthenticated [ I'm liking the first name more and more] ) the middleware must take a req, get the access token sent as a cookie in the req, chck if it's valid, and if it is, allow the ececution of the next() middlewares. if it's not valid then  then it must send back a response indicating so. 
+        [ ] add user roles to config, make an admin accnt. 
+        when the user sends a jwt, verify it and if succ, get the associated user's role from the DB from it. if the role matches the allowedRoles in the middleware, then OK 
+    [ ] make a /logout route
+        [ ] the client app's responsibility is to delete the access token, but our server app will make sure that on req sent to /logout route the httpOnly cookie containing the refresh token is cleared
+    [ ] store the RT associated with a particular user in his DB record
+        - we want to be able to have a list of all issued RTs so we can revoke em at any point
 
 
     
