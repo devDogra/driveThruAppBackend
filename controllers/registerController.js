@@ -9,9 +9,15 @@ const handleRegister = async (req, res) => {
     if (userData.role && userData.role != ROLES.Customer) {
         return res.status(401).json({error: "New accounts can only have the 'Customer' role"})
     }
-    const password = userData.password; 
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
-    userData.password = hashedPassword; 
+    
+    try {
+        const password = userData.password; 
+        const hashedPassword = await bcrypt.hash(password, saltRounds)
+        userData.password = hashedPassword; 
+    } catch(err) {
+        console.log(err.message); 
+        return res.status(500).json({error: err.message, message: "Could not hash password" });
+    }
 
     const user = new User(userData);
     try {
