@@ -21,6 +21,7 @@ const routers = {
     users: require("./routes/api/users"),
     orders: require("./routes/api/orders"),
     login: require("./routes/api/login"),
+    refreshToken: require('./routes/api/refreshToken'),
 }
 
 
@@ -29,6 +30,7 @@ app.use('/menuItems', routers.menuItems);
 app.use('/users', routers.users);
 app.use('/orders', routers.orders);
 app.use('/login', routers.login);
+app.use('/refreshToken', routers.refreshToken);
 
 
 main().catch(err => console.log(err));
