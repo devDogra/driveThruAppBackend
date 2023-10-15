@@ -42,7 +42,7 @@ const UserSchema = new Schema({
 
 UserSchema.statics.findByPhoneNumber = function(phone) {
     const model = this;
-    return model.find({ phone: phone })
+    return model.findOne({ phone: phone })
 }
 
 const User = mongoose.model("User", UserSchema);

@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan'); 
 const ROLES = require("./config/roles"); 
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
@@ -11,6 +12,7 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(express.json()); 
 app.use(express.urlencoded());
+app.use(cookieParser());
 
 
 const routers = {
