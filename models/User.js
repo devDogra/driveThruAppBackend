@@ -40,6 +40,11 @@ const UserSchema = new Schema({
     },
 })
 
+UserSchema.statics.findByPhoneNumber = function(phone) {
+    const model = this;
+    return model.find({ phone: phone })
+}
+
 const User = mongoose.model("User", UserSchema);
 module.exports = User; 
 
