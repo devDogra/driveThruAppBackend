@@ -4,12 +4,20 @@ const mongoose = require('mongoose');
 const morgan = require('morgan'); 
 const ROLES = require("./config/roles"); 
 const cookieParser = require('cookie-parser');
+const cors = require('cors'); 
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
 
 const app = express();
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', true);
+    next(); 
+})
 app.use(morgan('tiny'));
+app.use(cors({
+    credentials: true,
+}));
 app.use(express.json()); 
 app.use(express.urlencoded());
 app.use(cookieParser());
