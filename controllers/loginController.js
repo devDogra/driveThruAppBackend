@@ -8,6 +8,8 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 const handleLogin = async (req, res) => {
     const { phone, password } = req.body;
 
+    if (!phone || !password) return res.status(401).json({ error: "Phone number and password are required" }); 
+
     try {
         const user = await User.findByPhoneNumber(phone);
         console.log({user}); 

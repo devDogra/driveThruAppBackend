@@ -51,7 +51,7 @@ we'll use the user's 'phone' field as the username
     [ ] add validation to password to ensure that the password is atleast 8 characters long
         - but cant add it on the schema because that will store the **HASHED** password, so we have to validate the password length from the api
     [x] at the register/ route's controller, hash the received password and store THAT in the DB
-    [ ] make a /login or /authenticate route which receieves a { email (NOT EMAIL, PHONE NUMBER!!!!), password } and sends back an access token with the payload { email } 
+    [x] make a /login or /authenticate route which receieves a { email (NOT EMAIL, PHONE NUMBER!!!!), password } and sends back an access token with the payload { email } 
     and also a refresh token with the payload { email }
     the acc token must have a short expiry (keep it 1 min) for dev 
     the refresh token must have a longer expiry (hours)
