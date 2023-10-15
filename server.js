@@ -18,6 +18,7 @@ const routers = {
     menuItems: require("./routes/api/menuItems"),
     users: require("./routes/api/users"),
     orders: require("./routes/api/orders"),
+    login: require("./routes/api/login"),
 }
 
 
@@ -25,6 +26,7 @@ app.use('/register', routers.register);
 app.use('/menuItems', routers.menuItems);
 app.use('/users', routers.users);
 app.use('/orders', routers.orders);
+app.use('/login', routers.login);
 
 
 main().catch(err => console.log(err));
