@@ -71,13 +71,76 @@ we'll use the user's 'phone' field as the username
         - we want to be able to have a list of all issued RTs so we can revoke em at any point
         - ***will require modifications to the logincontroller, logoutcontroller (store reftok, del reftok)
     [ ] IMPLEMENT ROLES
-        [ ] make roles obj in config
-        [ ] have verifyJwt set req.role, make a middleware allowRoles(r1, r2..) that checks whether req.role is r1 or r2 or... etc and if it is. next(), and if it isn't, throw error
+        [x] make roles obj in config
+        [x] have verifyJwt set req.role, make a middleware allowRoles(r1, r2..) that checks whether req.role is r1 or r2 or... etc and if it is. next(), and if it isn't, throw error
         [ ] make an admin accnt (cant be created via api)
         [ ] give only the admin account the ABILITY to ELEVATE a Customer account role (default role) to the employeee role 
+        [ ] customers can PUT (update) their OWN account, but cant elevate their own role 
+        [ ] employees cant update their own account. only admin can.  the emps will have to get permission from the admin and have HIM update their accunt
+        [ ] customers can create orders
+        [ ] customers can delete/update orders within 5 mins of creating them 
+        [ ] customers can GET their OWN orders 
+        [ ] customers can edit their own acc details with the exception of:
+            - phone
+            - role
+        [ ] emps can update orders (status only i.e pending to delivered or cancelled)
+        [ ] emps 
     [ ] PROTECT ROUTES BY ROLE 
 
 
     
 [ ] add user roles
 [ ] protect routes acesss by role
+
+/* --------------------- user roles and what they can do -------------------- */
+
+roles -----------------
+|                     |
+customer              emp 
+                       |
+                      mgr 
+                       |
+                      admin
+
+the customer role is a bit diff from the emp, 
+but the mgr can do everything the emp can and some more 
+the admin can do everything the mgr can and some more
+
+creating orders 
+    customers 
+    emps
+    manager
+    admin
+updating orders
+    customers
+        - can create/make ORDERS 
+        - can update orders' items ordered, not status
+        - can get all of their OWN orders
+        - can delete their OWN account
+        - NOT ALLOWED: can delete orders. would waste resurces
+        - can edit their account details a bit 
+            - phone number
+            - name 
+            - password
+            - email
+        
+        
+    emps
+        - NOT ALLOWED: can fully update orders (too much security risk, so NO)
+        - can update order status (pending -> delivered / cancelled etc)
+        - NOT ALLOWED: can delete orders ("hey employee, delete my order please") (no, bc then deliver order then delete it and keep the money)
+        - can get all orders
+        - can edit their account details a bit 
+            - phone number
+            - name 
+            - password
+            - email
+    manager         
+        - all emp priviliges, plus:
+        - can update the menu (menuitems)
+    admin:
+        - all mgr priviliges, plus:
+        - can elevate roles (cust -> emp -> mgr) and demote them 
+        - can delete users (accounts) (the admin owns the app and thus has the right to cntrol which accounts can exist on it) 
+
+        
