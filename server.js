@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const ROLES = require("./config/roles"); 
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); 
+const verifyJWT = require('./middleware/verifyJWT');
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
@@ -39,6 +40,11 @@ app.use('/users', routers.users);
 app.use('/orders', routers.orders);
 app.use('/login', routers.login);
 app.use('/refreshToken', routers.refreshToken);
+
+app.use(verifyJWT); 
+app.use('/protected', (req, res) => {
+    return res.send("I am protected and can only be accessed by users with a valid AccJWT"); 
+})
 
 
 main().catch(err => console.log(err));
