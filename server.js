@@ -6,6 +6,7 @@ const ROLES = require("./config/roles");
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); 
 const verifyJWT = require('./middleware/verifyJWT');
+const allowRoles = require('./middleware/allowRoles'); 
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
@@ -45,6 +46,16 @@ app.use(verifyJWT);
 app.use('/protected', (req, res) => {
     return res.send("I am protected and can only be accessed by users with a valid AccJWT"); 
 })
+
+app.use('/allowCustomers', 
+    allowRoles('Customer', 'Employee', 'Admin'), 
+    (req, res) => res.send("OK: /allowCustomers")
+);
+
+app.use('/allowEmployees', 
+    allowRoles('Employee', 'Admin'),
+    (req, res) => res.send("OK: /allowEmployees")
+)
 
 
 main().catch(err => console.log(err));

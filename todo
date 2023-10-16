@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+testing reminder => access tokens have an expiry of 30s
+/* -------------------------------------------------------------------------- */
+
 customers make orders from the app
 emps see made orders on the app
 they prepare the order
@@ -58,13 +62,14 @@ we'll use the user's 'phone' field as the username
     the refresh token must have a longer expiry (hours)
     [x] make a /refreshToken route that takes in a refresh toen, verifies it and if it's valid then it sends back an access token 
     [ ] PROTECT ROUTES 
-        [ ] make middleware that verifies if a jwt is valid (name it verifyJWT or ensureAuthenticated [ I'm liking the first name more and more] ) the middleware must take a req, get the access token sent as a cookie---NOT COOKIE---!!!! (REQ's Authorization header) (a in the req, chck if it's valid, and if it is, allow the ececution of the next() middlewares. if it's not valid then  then it must send back a response indicating so. 
+        [x] make middleware that verifies if a jwt is valid (name it verifyJWT or ensureAuthenticated [ I'm liking the first name more and more] ) the middleware must take a req, get the access token sent as a cookie---NOT COOKIE---!!!! (REQ's Authorization header) (a in the req, chck if it's valid, and if it is, allow the ececution of the next() middlewares. if it's not valid then  then it must send back a response indicating so. 
         [ ] add user roles to config, make an admin accnt. 
         when the user sends a jwt, verify it and if succ, get the associated user's role from the DB from it. if the role matches the allowedRoles in the middleware, then OK 
     [ ] make a /logout route
         [ ] the client app's responsibility is to delete the access token, but our server app will make sure that on req sent to /logout route the httpOnly cookie containing the refresh token is cleared
-    [ ] store the RT associated with a particular user in his DB record
+    [ ] ****store the RT associated with a particular user in his DB record
         - we want to be able to have a list of all issued RTs so we can revoke em at any point
+        - ***will require modifications to the logincontroller, logoutcontroller (store reftok, del reftok)
     [ ] IMPLEMENT ROLES
         [ ] make roles obj in config
         [ ] have verifyJwt set req.role, make a middleware allowRoles(r1, r2..) that checks whether req.role is r1 or r2 or... etc and if it is. next(), and if it isn't, throw error
