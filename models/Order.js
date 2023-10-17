@@ -7,14 +7,13 @@ const MenuItem = require("./MenuItem");
 // quantity: Number
 // menuItemId 
 
-const sampleOrder = {
-    items: [
-        { quantity: 2, menuItemId: "<id1>" },
-        { quantity: 1, menuItemId: "<id2>" },
-        { quantity: 1, menuItemId: "<id3>" },
+const sampleOrder = 
+{
+    "items": [
+        { "quantity": 2, "menuItemId": "6522f71241594b1c9afd126d" },
+        { "quantity": 1, "menuItemId": "6522f71241594b1c9afd126e" }
     ],
-    customerId: "<id4>",
-    state: "Pending"
+    "customerId": "652bf4aff9929160ac682eec"
 }
 
 // ORDER:
@@ -54,7 +53,8 @@ const OrderSchema = new Schema({
     },
     state: {
         type: String,
-        enum: [ "Pending", "Prepared", "Delivered"]
+        enum: [ "Pending", "Prepared", "Delivered"],
+        default: "Pending",
     }
 }, { timestamps: true} )
 
