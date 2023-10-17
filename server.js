@@ -36,13 +36,15 @@ const routers = {
 
 
 app.use('/register', routers.register);
-app.use('/menuItems', routers.menuItems);
-app.use('/users', routers.users);
-app.use('/orders', routers.orders);
 app.use('/login', routers.login);
 app.use('/refreshToken', routers.refreshToken);
 
 app.use(verifyJWT); 
+
+app.use('/menuItems', routers.menuItems);
+app.use('/users', routers.users);
+app.use('/orders', routers.orders);
+
 app.use('/protected', (req, res) => {
     return res.send("I am protected and can only be accessed by users with a valid AccJWT"); 
 })
