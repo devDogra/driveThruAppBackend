@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'); 
 const Order = require('../models/Order');
+const ROLES = require('../config/roles.json')
 
 const sampleOrder = 
 {
@@ -25,6 +26,12 @@ const createOrder = async (req, res) => {
     }
 
 }
+
+function canUpdateOrderState(user) {
+    if (user.role == ROLES.Customer) return false; 
+    else return true; 
+}
+
 const updateOrderById = async (req, res) => {
     const id = req.params.id; 
 
@@ -32,6 +39,14 @@ const updateOrderById = async (req, res) => {
     if (!isValidId) return res.status(400).json({ error: "The given ID is an invalid ObjectId" });
 
     const updatedData = req.body;
+
+    // If trying to update the order state
+    if (updatedData.state) {
+        if (!canUpdateOrderState(req.user)) {
+            return res.status(401).json({ error: "Insufficient priviliges to update order state" });
+        }
+    }
+
     let updateResult = null;
     try {
         const order = await Order.findById(id);
