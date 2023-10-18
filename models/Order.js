@@ -58,5 +58,10 @@ const OrderSchema = new Schema({
     }
 }, { timestamps: true} )
 
+OrderSchema.statics.getStateList = function() {
+    const model = this;
+    return model.schema.path('state').enumValues; 
+}
+
 const Order = mongoose.model("Order", OrderSchema);
 module.exports = Order; 
