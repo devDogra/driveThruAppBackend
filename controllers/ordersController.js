@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
 }
 
 function canUpdateOrderState(user) {
-    if (!user.role) return false; 
+    // user.role will ALWAYS be a valid role if the request has got to this middleware
     if (user.role == ROLES.Customer) return false; 
     else return true; 
 }
@@ -39,8 +39,8 @@ const updateOrderById = async (req, res) => {
     const isValidId = mongoose.Types.ObjectId.isValid(id); 
     if (!isValidId) return res.status(400).json({ error: "The given ID is an invalid ObjectId" });
 
-    const updatedData = req.body;
-
+    let updatedData = req.body;
+    
     // If trying to update the order state
     if (updatedData.state) {
         if (!canUpdateOrderState(req.user)) {
@@ -48,10 +48,16 @@ const updateOrderById = async (req, res) => {
         }
     }
 
+    // Only allow employees to update the order state
+    if (req.user.role == ROLES.Employee) {
+        updatedData = { state: updatedData.state }
+    }
+
     let updateResult = null;
     try {
         const order = await Order.findById(id);
         if (!order) return res.status(404).json({ error: "Order not found" });
+
         const updatedOrder = Object.assign(order, updatedData);
         updateResult = await updatedOrder.save();
     } catch(err) {
