@@ -15,7 +15,11 @@ const sampleOrder =
 
 const createOrder = async (req, res) => {
     const orderData = req.body; 
-    const order = new Order(orderData);
+
+    const order = new Order({
+        ...orderData,
+        customerId: req.user._id,
+    });
 
     try {
         await order.save();
