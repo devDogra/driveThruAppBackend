@@ -25,7 +25,7 @@ const handleLogin = async (req, res) => {
             user: user._id,
             phone: user.phone,
         }
-        const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '60s'});
+        const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '120s'});
         const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: '1d'});
 
         // httpOnly: true for more security; 
