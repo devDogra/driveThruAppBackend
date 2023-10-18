@@ -103,6 +103,14 @@ const getOrderById = async (req, res) => {
 
 const getAllOrdersByUserId = async (req, res) => {
     const userId = req.query.userId;
+
+    // If a customer is trying to get the orders for an account other than his
+    if (
+        req.user.role == ROLES.Customer && 
+        req.user._id != userId
+    ) {
+        return res.status(403).json({ error: "Users with role 'Customer' can only GET their own orders" });
+    }
     
     const isValidCustomerId = mongoose.Types.ObjectId.isValid(userId); 
     if (userId && !isValidCustomerId) return res.status(400).json({ error: "Cannot fetch orders for an invalid customer ID" });
