@@ -113,8 +113,8 @@ creating orders
     admin
 updating orders
     customers
-        - can create/make ORDERS 
-        - can update orders' items ordered, not status
+        x can create/make ORDERS  
+        x can update orders' items ordered, not state
         - can get all of their OWN orders
         - can delete their OWN account
         - NOT ALLOWED: can delete orders. would waste resurces
@@ -126,7 +126,8 @@ updating orders
         
         
     emps
-        - NOT ALLOWED: can fully update orders (too much security risk, so NO)
+        - NOT ALLOWED: can fully update orders (too much security risk, so NO) (i think this should be allowed, now)
+                - NOTE:::: allowROles only allows access to the next middleware IFF req.user.role is present in the roles list. this means that if req.user.role is undefined, access wont be allowed, ensuring that any request that accesses a protcted route will always have a req.user that HAS a role
         - can update order status (pending -> delivered / cancelled etc)
         - NOT ALLOWED: can delete orders ("hey employee, delete my order please") (no, bc then deliver order then delete it and keep the money)
         - can get all orders
@@ -136,6 +137,7 @@ updating orders
             - password
             - email
     manager         
+        x can create orders (which emps cannot)
         - all emp priviliges, plus:
         - can update the menu (menuitems)
     admin:

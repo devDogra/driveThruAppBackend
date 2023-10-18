@@ -28,6 +28,7 @@ const createOrder = async (req, res) => {
 }
 
 function canUpdateOrderState(user) {
+    if (!user.role) return false; 
     if (user.role == ROLES.Customer) return false; 
     else return true; 
 }
