@@ -10,7 +10,7 @@ const ROLES = require('../../config/roles')
 const allowedRoles = {
     GET: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
     POST: allowRoles(ROLES.Customer, ROLES.Manager, ROLES.Admin),
-    GET_id: null, 
+    GET_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin), 
     DELETE_id: null,
     PUT_id: null,
 }
@@ -19,7 +19,7 @@ router.route('/')
     .post(allowedRoles.POST, ordersController.createOrder)
 
 router.route('/:id')
-    .get(ordersController.getOrderById)
+    .get(allowedRoles.GET_id, ordersController.getOrderById)
     .delete(ordersController.deleteOrderById)
     .put(ordersController.updateOrderById)
 

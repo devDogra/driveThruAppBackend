@@ -115,7 +115,9 @@ updating orders
     customers
         x can create/make ORDERS  
         x can update orders' items ordered, not state
-        - can get all of their OWN orders
+        x can get all of their OWN orders
+        - can get ONE of their OWN orders BY ID
+        - CANNOT delete order (once it's made, it's made, and that's that) 
         - can delete their OWN account
         - NOT ALLOWED: can delete orders. would waste resurces
         - can edit their account details a bit 
@@ -129,10 +131,11 @@ updating orders
         x NOT ALLOWED: can fully update orders (too much security risk, so NO) 
                 - NOTE:::: allowROles only allows access to the next middleware IFF req.user.role is present in the roles list. this means that if req.user.role is undefined, access wont be allowed, ensuring that any request that accesses a protcted route will always have a req.user that HAS a role
         x can update order status ONLY (pending -> delivered / cancelled etc)
-        - can get ALL orders, or all orders from a particular person. 
+        x can get ALL orders, or all orders from a particular person. 
         - can delete orders (but cannot update them, so if someone wants an update just delete the existing order and make a new one, otherwise the emp could just update anything of his own will. 
             - ** I think this should be allowed now????
-        - can get all orders
+        x can get all orders
+        - can get ONE of ANYONE's orders BY ID
         - can edit their account details a bit 
             - phone number
             - name 

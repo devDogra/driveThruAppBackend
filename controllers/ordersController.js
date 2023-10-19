@@ -88,15 +88,27 @@ const deleteOrderById = async (req, res) => {
     }
 
 }
+
 const getOrderById = async (req, res) => {
-    const id = req.params.id; 
-    
+    const id = req.params.id; // orderId
+
+
     const isValidId = mongoose.Types.ObjectId.isValid(id); 
     if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" }); 
 
     try {
         const order = await Order.findById(id);
         if (!order) return res.status(404).json({ error: "Order not found" });
+        
+        const customerGettingOwnOrder = (
+            (req.user.role == ROLES.Customer) && 
+            (order.customerId.toString() === req.user._id.toString())
+        ); 
+
+        if (!customerGettingOwnOrder) {
+            return res.status(403).json({ error: "Customers can only get their own order by ID" });
+        }
+        
         return res.status(200).json({ success: "Order found succesfully", order });
     } catch(err) {
         console.log(err.message); 
