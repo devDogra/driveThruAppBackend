@@ -120,7 +120,8 @@ updating orders
         x can cancel order, and if cancelling, no field other than 'state' should be updated. cant set order state to 'delivered', that's for empsloyees and more only
         x can only cancel within the deadline (2 mins or whatever)
         - can delete their OWN account
-        - NOT ALLOWED: can delete orders. would waste resurces
+        - NOT ALLOWED: can delete orders. would waste resurces\
+        x can get their OWN account details, and nothing else
         - can edit their account details a bit 
             - phone number
             - name 
@@ -137,7 +138,8 @@ updating orders
         x can set order state to delivered/cancelled, no deadline for cancellation
         x cannot update cancelled or delivered orders
         x can get all orders, or all orders by userId
-        - can get ONE of ANYONE's orders BY order ID
+        x can get ONE of ANYONE's orders BY order ID
+        x can get OWN account details, and nothing else (or unsafe)
         - can edit their account details a bit 
             - phone number
             - name 
@@ -147,10 +149,12 @@ updating orders
         x can create orders (which emps cannot)
         - all emp priviliges, plus:
         - can update the menu (menuitems)
+        x can get OWN + employees account details
     admin:
         - all mgr priviliges, plus:
         x can delete orders by orderid
         - can elevate roles (cust -> emp -> mgr) and demote them 
         - can delete users (accounts) (the admin owns the app and thus has the right to cntrol which accounts can exist on it) 
+        - can get alls' account details
 
         

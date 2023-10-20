@@ -1,9 +1,10 @@
 const mongoose = require('mongoose'); 
 const User = require('../models/User');
-
+const ROLES = require('../config/roles');
 
 const getUserById = async (req, res) => {
     const id = req.params.id; 
+    console.log("REQUESTER ROLE => ", req.user.role); 
 
     const isValidId = mongoose.Types.ObjectId.isValid(id);
     if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" });
@@ -11,6 +12,25 @@ const getUserById = async (req, res) => {
     try {
         const user = await User.findById(id);
         if (!user) return res.status(404).json({error: "User not found"});
+        
+        const gettingOwnAccount = user._id.toString() === req.user._id.toString();
+
+        // Customers and Employees can only get their own details
+        if (req.user.role == ROLES.Customer || req.user.role == ROLES.Employee) {
+            if (!gettingOwnAccount) {
+                return res.status(403).json({ error: `${req.user.role}s can only get their own account details`});
+            }
+        }
+        
+        // Managers can get their own + employee details
+        const gettingEmployeeAccount = user.role == ROLES.Employee;
+        if (req.user.role == ROLES.Manager) {
+            console.log("Role is manager"); 
+            if (!gettingEmployeeAccount && !gettingOwnAccount) {
+                return res.status(403).json({ error: `${req.user.role}s can only get their own or employee account details`});
+            } 
+        }
+
         return res.status(200).json({ success: "User found", user });
     } catch(err) {
         console.log(err); 
