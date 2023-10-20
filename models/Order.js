@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'); 
+const dateFns = require('date-fns'); 
 const Schema = mongoose.Schema; 
 const ObjectId = Schema.Types.ObjectId;
 
@@ -62,6 +63,13 @@ OrderSchema.statics.getStateList = function() {
     const model = this;
     return model.schema.path('state').enumValues; 
 }
+
+OrderSchema.virtual('cancellationDeadlineDate').get(function() {
+    const order = this; 
+    const creationDate = new Date(order.createdAt);
+    const cancellationDeadlineDate = dateFns.addMinutes(creationDate, 5);
+    return cancellationDeadlineDate; 
+});
 
 const Order = mongoose.model("Order", OrderSchema);
 module.exports = Order; 
