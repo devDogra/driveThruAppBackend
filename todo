@@ -129,7 +129,8 @@ updating orders
             - email
         
         
-    emps
+    emps: 
+        ===== think of emps as just Customer accounts with some superpowrs ===== 
         x NOT ALLOWED: can fully update orders (too much security risk, so NO) 
                 - NOTE:::: allowROles only allows access to the next middleware IFF req.user.role is present in the roles list. this means that if req.user.role is undefined, access wont be allowed, ensuring that any request that accesses a protcted route will always have a req.user that HAS a role
         x can update order status ONLY (pending -> delivered / cancelled etc)
@@ -139,6 +140,7 @@ updating orders
         x cannot update cancelled or delivered orders
         x can get all orders, or all orders by userId
         x can get ONE of ANYONE's orders BY order ID
+        - can delete account
         x can get OWN account details, and nothing else (or unsafe)
         - can edit their account details a bit 
             - phone number

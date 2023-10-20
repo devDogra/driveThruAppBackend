@@ -8,7 +8,10 @@ const ROLES = require('../../config/roles')
 const allowedRoles = {
     GET: allowRoles(ROLES.Admin),
     GET_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
-    DELETE_id: (req, res, next) => { next() },
+    // Customer, Emp => Delete own account
+    // Manager => Delete own + employee account
+    // Admin => Delete any account
+    DELETE_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
     PUT_id: (req, res, next) => { next() },
 }
 

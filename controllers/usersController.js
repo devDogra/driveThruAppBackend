@@ -40,12 +40,38 @@ const getUserById = async (req, res) => {
 
 const deleteUserById = async (req, res) => {
     const id = req.params.id; 
+
+
     
     const isValidId = mongoose.Types.ObjectId.isValid(id); 
     if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" }); 
 
     try {
-        await User.findByIdAndDelete(id);
+        // await User.findByIdAndDelete(id);
+        const userToDelete = await User.findById(id);
+        const deletingOwnAccount = req.user._id.toString() === id;
+        const deletingEmployeeAccount = userToDelete.role === ROLES.Employee; 
+        const deletingAdminAccount = userToDelete.role === ROLES.Admin;
+
+        console.log({
+            userToDelete, 
+            deletingOwnAccount,
+            deletingEmployeeAccount,
+            deletingAdminAccount,
+        })
+
+        if (req.user.role == ROLES.Customer || req.user.role == ROLES.Employee){
+            if (!deletingOwnAccount) return res.status(403).json({ error: `${req.user.role}s can only delete their own account`})
+        }
+        if (req.user.role == ROLES.Manager) {
+            if (!deletingOwnAccount && !deletingEmployeeAccount) return res.status(403).json({ error: `${req.user.role}s can only delete their own or Employee accounts`})
+        }
+        if (req.user.role == ROLES.Admin) {
+            if (deletingAdminAccount) {
+                return res.status(403).json({ error: `${req.user.role}s cannot delete their own accounts`})
+            }
+        }
+
         return res.status(200).json({ success: "User deleted succesfully" })
     } catch(err) {
         console.log(err); 
