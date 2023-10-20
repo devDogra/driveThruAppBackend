@@ -40,24 +40,24 @@ function canUpdateOrderState(user) {
 function isValidOrderStateUpdate(updatedState, user, order) {
     const role = user.role; 
 
-    if (!updatedState) return true;
+    if (order.state == "Cancelled" || order.state == "Delivered") return [false, "Cannot update cancelled or delivered orders"];
+
+    if (!updatedState) return [true, null];
 
     // Any role can cancel the order
     if (updatedState == "Cancelled") {
         if (role == ROLES.Customer) {
             const now = new Date(); 
             if (now > order.cancellationDeadlineDate) {
-                console.log("Deadline expired"); 
-                return false
+                return [false, "Cancellation time expired"]
             }
-            else return true;
         } 
         
         // because non Customers can cancel orders without any deadline
-        return true; 
+        return [true, null]; 
     }
     // But only employees+ can make the order pending->delivered
-    return (role != "Customer"); 
+    return (role != "Customer") ? [true, null] : [false, "Customers cannot set orders to delivered"]; 
 }
 
 const updateOrderById = async (req, res) => {
@@ -72,8 +72,9 @@ const updateOrderById = async (req, res) => {
         const order = await Order.findById(id);
         if (!order) return res.status(404).json({ error: "Order not found" });
 
-        if (!isValidOrderStateUpdate(updatedData.state, req.user, order)) {
-            return res.status(401).json({ error: "Insufficient priviliges to update order state" });
+        const [validity, invalidReason] = isValidOrderStateUpdate(updatedData.state, req.user, order)
+        if (!validity) {
+            return res.status(401).json({ error: "Insufficient priviliges to update order state", message: invalidReason });
         }
     
         // If here, then state update is allowed, so
@@ -84,7 +85,6 @@ const updateOrderById = async (req, res) => {
             updatedData = { state: updatedData.state };
         }
 
-        if (order.state == "Cancelled" || order.state == "Delivered") return res.status(403).json({ error: "Cannot update cancelled or delivered orders" })
 
         const updatedOrder = Object.assign(order, updatedData);
         updateResult = await updatedOrder.save();
