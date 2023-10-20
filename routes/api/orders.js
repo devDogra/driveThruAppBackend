@@ -12,7 +12,12 @@ const allowedRoles = {
     POST: allowRoles(ROLES.Customer, ROLES.Manager, ROLES.Admin),
     GET_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin), 
     DELETE_id: null,
-    PUT_id: null,
+    // Customer: 
+        // Set order state to cancelled
+        // Change items/quantity
+    // Emps: 
+        // Set order state to delivered
+    PUT_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
 }
 router.route('/')
     .get(allowedRoles.GET, ordersController.getAllOrdersByUserId) // If no ID is supplied, just GETs all orders

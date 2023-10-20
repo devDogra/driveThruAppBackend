@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express'); 
 const mongoose = require('mongoose');
 const morgan = require('morgan'); 
+const dateFns = require('date-fns'); 
 const ROLES = require("./config/roles"); 
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); 
@@ -73,7 +74,21 @@ async function main() {
         /* ----------------------------- TEST DB MODELS ----------------------------- */
         // const User = require("./models/User");
         // const MenuItem = require("./models/MenuItem");
-        // const Order = require("./models/Order");
+        const Order = require("./models/Order");
+
+        const order = await Order.findOne(); 
+        const cancel = order.cancellationDeadlineDate; 
+        const curr = new Date();
+        if (curr > cancel) {
+            console.log("Cant be cancelled"); 
+        } else {
+            console.log("CAN be cancelled"); 
+        }
+        console.log(cancel); 
+        // const creationDate = new Date(order.createdAt);
+        // const cancellationDeadlineDate = dateFns.addMinutes(creationDate, 5);
+        // console.log(creationDate, typeof creationDate); 
+        // console.log(cancellationDeadlineDate, typeof cancellationDeadlineDate); 
 
         // await User.deleteMany({});
         // await MenuItem.deleteMany({});
