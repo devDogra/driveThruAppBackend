@@ -37,6 +37,18 @@ function canUpdateOrderState(user) {
     else return true; 
 }
 
+function isValidOrderStateUpdate(updatedState, user) {
+    const role = user.role; 
+
+    if (!updatedState) return true;
+
+    // Any role can cancel the order
+    if (updatedState == "Cancelled") return true;
+
+    // But only employees+ can make the order pending->delivered
+    return (role != "Customer"); 
+}
+
 const updateOrderById = async (req, res) => {
     const id = req.params.id; 
 
@@ -45,11 +57,8 @@ const updateOrderById = async (req, res) => {
 
     let updatedData = req.body;
     
-    // If trying to update the order state
-    if (updatedData.state) {
-        if (!canUpdateOrderState(req.user)) {
-            return res.status(401).json({ error: "Insufficient priviliges to update order state" });
-        }
+    if (!isValidOrderStateUpdate(updatedData.state, req.user)) {
+        return res.status(401).json({ error: "Insufficient priviliges to update order state" });
     }
 
     // Only allow employees to update the order state
