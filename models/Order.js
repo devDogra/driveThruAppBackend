@@ -53,7 +53,7 @@ const OrderSchema = new Schema({
     },
     state: {
         type: String,
-        enum: [ "Pending", "Delivered"],
+        enum: [ "Pending", "Delivered", "Cancelled"],
         default: "Pending",
     }
 }, { timestamps: true} )
