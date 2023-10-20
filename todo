@@ -136,8 +136,8 @@ updating orders
         - CANNOT delete orders 
         x can set order state to delivered/cancelled, no deadline for cancellation
         x cannot update cancelled or delivered orders
-        x can get all orders
-        - can get ONE of ANYONE's orders BY ID
+        x can get all orders, or all orders by userId
+        - can get ONE of ANYONE's orders BY order ID
         - can edit their account details a bit 
             - phone number
             - name 

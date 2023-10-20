@@ -124,12 +124,11 @@ const getOrderById = async (req, res) => {
         const order = await Order.findById(id);
         if (!order) return res.status(404).json({ error: "Order not found" });
         
-        const customerGettingOwnOrder = (
-            (req.user.role == ROLES.Customer) && 
+        const gettingOwnOrder = (
             (order.customerId.toString() === req.user._id.toString())
         ); 
 
-        if (!customerGettingOwnOrder) {
+        if ((req.user.role == ROLES.Customer) && !gettingOwnOrder) {
             return res.status(403).json({ error: "Customers can only get their own order by ID" });
         }
         
