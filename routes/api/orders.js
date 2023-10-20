@@ -11,7 +11,7 @@ const allowedRoles = {
     GET: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
     POST: allowRoles(ROLES.Customer, ROLES.Manager, ROLES.Admin),
     GET_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin), 
-    DELETE_id: null,
+    DELETE_id: allowRoles(ROLES.Admin),
     // Customer: 
         // Set order state to cancelled
         // Change items/quantity
@@ -25,8 +25,8 @@ router.route('/')
 
 router.route('/:id')
     .get(allowedRoles.GET_id, ordersController.getOrderById)
-    .delete(ordersController.deleteOrderById)
-    .put(ordersController.updateOrderById)
+    .delete(allowedRoles.DELETE_id, ordersController.deleteOrderById)
+    .put(allowedRoles.PUT_id, ordersController.updateOrderById)
 
 
 module.exports = router;
