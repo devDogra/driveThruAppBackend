@@ -48,6 +48,9 @@ const deleteUserById = async (req, res) => {
 
     try {
         const userToDelete = await User.findById(id);
+
+        if (!userToDelete) return res.status(404).json({ error: "No user with the given id exists" }); 
+
         const deletingOwnAccount = req.user._id.toString() === id;
         const deletingEmployeeAccount = userToDelete.role === ROLES.Employee; 
         const deletingAdminAccount = userToDelete.role === ROLES.Admin;
