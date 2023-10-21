@@ -142,7 +142,7 @@ updating orders
         x can get ONE of ANYONE's orders BY order ID
         x can delete account
         x can get OWN account details, and nothing else (or unsafe)
-        - can edit their account details a bit 
+        [WIP] can edit their account details a bit (everything except role)
             - phone number
             - name 
             - password
@@ -152,11 +152,15 @@ updating orders
         - all emp priviliges, plus:
         - can update the menu (menuitems)
         x can get OWN + employees account details
+        - can edit their own account details a bit 
+        - can demote Employees to Customers
     admin:
         x CANNOT delete own account
+        - CANNOT just update anyone's account details
         - all mgr priviliges, plus:
         x can delete orders by orderid
-        - can elevate roles (cust -> emp -> mgr) and demote them 
+        - can elevate roles (cust -> emp -> mgr) and demote them
+            - CAN make other admins too, mybe multiple trustworthy parties or whatever. just like whatspapp groups can have multiple admins
         x can delete users (accounts) (the admin owns the app and thus has the right to cntrol which accounts can exist on it) 
         x can get alls' account details
 

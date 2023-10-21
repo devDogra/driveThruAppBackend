@@ -11,7 +11,10 @@
 
 // Select the database to use.
 use('driveThruApp');
-
-// db.getCollectionNames();
-// db.menuitems.find();
-db.users.find();
+db.users.updateOne({
+    firstName: 'empempemp'
+}, {
+    $set: {
+        role: 'Employee'
+    }
+})

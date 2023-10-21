@@ -12,7 +12,7 @@ const allowedRoles = {
     // Manager => Delete own + employee account
     // Admin => Delete any account
     DELETE_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
-    PUT_id: (req, res, next) => { next() },
+    PUT_id: allowRoles(ROLES.Customer, ROLES.Employee, ROLES.Manager, ROLES.Admin),
 }
 
 router.route('/:id')

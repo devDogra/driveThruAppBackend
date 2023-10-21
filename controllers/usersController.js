@@ -96,14 +96,50 @@ const getAllUsers = async (req, res) => {
 const updateUserById = async (req, res) => {
     const id = req.params.id; 
     const updatedData = req.body; 
+    const updatedRole = updatedData.role; 
     
     const isValidId = mongoose.Types.ObjectId.isValid(id); 
     if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" });
+
+
 
     let updateResult = null;
     try {
         const user = await User.findById(id); 
         if (!user) return res.status(404).json({ error: "User not found" })
+
+        const updatingOwnAccount = req.user.id == id; 
+        const updatingEmployeeAccount = user.role == ROLES.Employee;
+        
+        /* ------ Check if req.user is actually allowed to update this account ------ */
+        if (req.user.role == ROLES.Customer || req.user.role == ROLES.Employee) {
+            if (!updatingOwnAccount) return res.status(403).json({ error: `${req.user.role}s are only allowed to update their own account`})
+        }
+        if (req.user.role == ROLES.Manager) {
+            if (!updatingOwnAccount && !updatingEmployeeAccount) {
+                return res.status(403).json({
+                    error: `${req.user.role}s are only allowed to update their own or employee accounts`
+                })
+            }
+        }
+    
+        /* ---------------------- Check if role update is valid --------------------- */
+        if (updatedRole) {
+            // Then the role is being updated
+            if (req.user.role == ROLES.Customer || req.user.role == ROLES.Employee){
+                return res.status(403).json({ error: `${req.user.role} are not allowed to update user roles` });
+            }
+            if (!Object.keys(ROLES).includes(updatedRole)) {
+                return res.status(400).json( { error: `${updatedRole} is not a valid role`})
+            }
+            if (req.user.role == ROLES.Manager) {
+                if (updatedRole != ROLES.Customer) {
+                    return res.status(403).json({ error: `${ROLES.Manager}s are only allowed to give the ${ROLES.Customer} role to accounts`})                
+                }
+            }        
+        }
+
+
         const updatedUser = Object.assign(user, updatedData); 
         updateResult =  await updatedUser.save();
     } catch(err) {
