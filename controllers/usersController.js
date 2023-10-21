@@ -136,7 +136,13 @@ const updateUserById = async (req, res) => {
                 if (updatedRole != ROLES.Customer) {
                     return res.status(403).json({ error: `${ROLES.Manager}s are only allowed to give the ${ROLES.Customer} role to accounts`})                
                 }
-            }        
+            }   
+            
+            if (req.user.role == ROLES.Admin) {
+                if (updatedRole != ROLES.Admin) {
+                    return res.status(403).json({ error: `${ROLES.Admin}s cannot demote themselves to a lower role`})
+                }
+            }
         }
 
 

@@ -10,6 +10,11 @@ customer ***PAYS IN CASH***
 
 ** admin have FULL ACCESS to all routes and functionalities **
 
+
+/* -------------------------------------------------------------------------- */
+/*                              TEST EVERY CHANGE                             */
+/* -------------------------------------------------------------------------- */
+
 ------------------------------------------------
     all these api calls have a lot of repetition even for diff resources....
     for eg: there's always a valid id check and stuff and the same
@@ -152,11 +157,12 @@ updating orders
         - all emp priviliges, plus:
         - can update the menu (menuitems)
         x can get OWN + employees account details
-        - can edit their own account details a bit 
+        x can edit their own account details a bit 
         - can demote Employees to Customers
     admin:
         x CANNOT delete own account
-        - CANNOT just update anyone's account details
+        - CANNOT just update anyone's account details (bypass for now)
+        x CANNOT demote self
         - all mgr priviliges, plus:
         x can delete orders by orderid
         - can elevate roles (cust -> emp -> mgr) and demote them
