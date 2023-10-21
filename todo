@@ -147,8 +147,8 @@ updating orders
    
     manager         
         x can create orders (which emps cannot)
-        - all emp priviliges, plus:
-        - can update the menu (menuitems)
+        x all emp priviliges, plus:
+        x can update the menu (menuitems)
         x can get OWN + employees account details
         x can edit their own account details a bit 
         x can demote Employees to Customers
@@ -156,7 +156,7 @@ updating orders
         x CANNOT delete own account
         - CANNOT just update anyone's account details (bypass for now)
         x CANNOT demote self
-        - all mgr priviliges, plus:
+        x all mgr priviliges, plus:
         x can delete orders by orderid
         x can elevate roles (cust -> emp -> mgr) and demote them
             - CAN make other admins too, mybe multiple trustworthy parties or whatever. just like whatspapp groups can have multiple admins
