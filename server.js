@@ -40,6 +40,7 @@ const routers = {
 app.use('/register', routers.register);
 app.use('/login', routers.login);
 app.use('/refreshToken', routers.refreshToken);
+app.use('/unprotected', (req, res) => res.send("Unprotected OK")); 
 
 app.use(verifyJWT); 
 
