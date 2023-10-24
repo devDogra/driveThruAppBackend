@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.route('/')
-    .post((req, res) => {
+    .get((req, res) => {
         return res.status(200).json({
             isLoggedIn: true, 
             user: req.user, 

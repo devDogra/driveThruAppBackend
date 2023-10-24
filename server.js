@@ -19,7 +19,8 @@ app.use((req, res, next) => {
 })
 app.use(morgan('tiny'));
 app.use(cors({
-    credentials: true,
+    credentials: true, 
+    origin: true, // Reflect the requests's origin
 }));
 app.use(express.json()); 
 app.use(express.urlencoded());
@@ -36,7 +37,11 @@ const routers = {
     validate: require('./routes/api/validate')
 }
 
-
+app.use((req, res, next) => {
+    console.log("COOKIES:"); 
+    console.log(req.cookies)
+    next();
+})
 app.use('/register', routers.register);
 app.use('/login', routers.login);
 app.use('/refreshToken', routers.refreshToken);
