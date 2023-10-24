@@ -33,6 +33,7 @@ const routers = {
     orders: require("./routes/api/orders"),
     login: require("./routes/api/login"),
     refreshToken: require('./routes/api/refreshToken'),
+    validate: require('./routes/api/validate')
 }
 
 
@@ -45,6 +46,7 @@ app.use(verifyJWT);
 app.use('/menuItems', routers.menuItems);
 app.use('/users', routers.users);
 app.use('/orders', routers.orders);
+app.use('/validate', routers.validate); // Check if user is logged in 
 
 app.use('/protected', (req, res) => {
     return res.send("I am protected and can only be accessed by users with a valid AccJWT"); 
