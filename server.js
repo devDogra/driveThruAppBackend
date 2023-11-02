@@ -47,9 +47,11 @@ app.use('/login', routers.login);
 app.use('/refreshToken', routers.refreshToken);
 app.use('/unprotected', (req, res) => res.send("Unprotected OK")); 
 
+// Requires authentication for non-GET methods
+app.use('/menuItems', routers.menuItems);
+
 app.use(verifyJWT); 
 
-app.use('/menuItems', routers.menuItems);
 app.use('/users', routers.users);
 app.use('/orders', routers.orders);
 app.use('/validate', routers.validate); // Check if user is logged in 

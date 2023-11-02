@@ -2,6 +2,6 @@
     "Customer": "Customer",
     "Employee": "Employee",
     "Manager": "Manager",
-    "Admin": "Admin"
-    
+    "Admin": "Admin",
+    "Anonymous": null
 }
