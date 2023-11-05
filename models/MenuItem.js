@@ -18,6 +18,10 @@ const MenuItemSchema = new Schema({
     price: {
         type: Number,
         required: true,
+    }, 
+    img: {
+        type: String,
+        default: "/path/to/no/img/img"
     }
 })
 

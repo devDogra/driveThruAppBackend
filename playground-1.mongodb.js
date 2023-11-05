@@ -11,10 +11,5 @@
 
 // Select the database to use.
 use('driveThruApp');
-db.users.updateOne({
-    firstName: 'empempemp'
-}, {
-    $set: {
-        role: 'Employee'
-    }
-})
+db.menuitems.find();
+

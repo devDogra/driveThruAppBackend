@@ -1,4 +1,6 @@
 require('dotenv').config(); 
+const fs = require('fs/promises');
+const path = require('path');
 const express = require('express'); 
 const mongoose = require('mongoose');
 const morgan = require('morgan'); 
@@ -8,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors'); 
 const verifyJWT = require('./middleware/verifyJWT');
 const allowRoles = require('./middleware/allowRoles'); 
+const addImagesToMenuItemsInDB = require('./dbscripts/addImagesToMenuItemsInDB'); 
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
@@ -26,6 +29,17 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 
+app.use(
+    '/static', 
+    express.static(
+        path.join(__dirname, 'static'), 
+    ), 
+    (req, res, next) => {
+        const url = req.url;
+        const pathOf404Img = path.join(__dirname, 'static', '404.webp');
+        res.sendFile(pathOf404Img);
+    }, 
+)
 
 const routers = {
     register: require("./routes/api/register"),
@@ -82,19 +96,16 @@ async function main() {
         })
 
         /* ----------------------------- TEST DB MODELS ----------------------------- */
-        // const User = require("./models/User");
-        // const MenuItem = require("./models/MenuItem");
-        const Order = require("./models/Order");
-
-        const order = await Order.findOne(); 
-        const cancel = order.cancellationDeadlineDate; 
-        const curr = new Date();
-        if (curr > cancel) {
-            console.log("Cant be cancelled"); 
-        } else {
-            console.log("CAN be cancelled"); 
-        }
-        console.log(cancel); 
+        await addImagesToMenuItemsInDB();
+        // const order = await Order.findOne(); 
+        // const cancel = order.cancellationDeadlineDate; 
+        // const curr = new Date();
+        // if (curr > cancel) {
+        //     console.log("Cant be cancelled"); 
+        // } else {
+        //     console.log("CAN be cancelled"); 
+        // }
+        // console.log(cancel); 
         // const creationDate = new Date(order.createdAt);
         // const cancellationDeadlineDate = dateFns.addMinutes(creationDate, 5);
         // console.log(creationDate, typeof creationDate); 

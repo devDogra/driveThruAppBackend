@@ -167,4 +167,17 @@ updating orders
         x can delete users (accounts) (the admin owns the app and thus has the right to cntrol which accounts can exist on it) 
         x can get alls' account details
 
-        
+    
+[x] allow non auth'd to get menu items  
+[ ] static or public folder to store imgs
+storing imgs on filesys is better than DB
+make req for item
+item obj delivered
+has img path
+img.src = path 
+then another req made by browser for that img
+so the static folder needs to be mounted
+[ ] store url of img in the file sys in the db for
+each menu item (update this manually i think) 
+[ ] create a script to insert menu items into 
+the db automaticaly from a json
