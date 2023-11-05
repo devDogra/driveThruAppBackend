@@ -11,5 +11,25 @@
 
 // Select the database to use.
 use('driveThruApp');
-db.menuitems.find();
+db.menuitems.updateOne({
+    name: "testItem",
+}, {
+    $set: { description: "Test Item Description" }
+})
+
+// db.menuitems.updateOne({
+//     name: "Fries",
+// }, {
+//     description: "Crisp and golden"
+// })
+// db.menuitems.updateOne({
+//     name: "Pepsi",
+// }, {
+//     description: "Extra fizzy"
+// })
+// db.menuitems.updateOne({
+//     name: "testItem",
+// }, {
+//     description: "Test Item Description"
+// })
 

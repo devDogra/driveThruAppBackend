@@ -22,6 +22,10 @@ const MenuItemSchema = new Schema({
     img: {
         type: String,
         default: "/path/to/no/img/img"
+    },
+    description: {
+        type: String, 
+        required: true, 
     }
 })
 

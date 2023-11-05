@@ -95,8 +95,10 @@ async function main() {
             console.log(`Listening at http://127.0.0.1:${PORT}`)
         })
 
-        /* ----------------------------- TEST DB MODELS ----------------------------- */
-        await addImagesToMenuItemsInDB();
+        /* ----------------------------- TEST DB MODELS/RUN SCRIPTS --------------- */
+        // await addImagesToMenuItemsInDB();
+        /* -------------------------------------------------------------------------- */
+        
         // const order = await Order.findOne(); 
         // const cancel = order.cancellationDeadlineDate; 
         // const curr = new Date();
