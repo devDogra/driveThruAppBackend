@@ -156,8 +156,23 @@ const getAllOrdersByUserId = async (req, res) => {
 
     const queryFilter = userId ? { customerId: userId } : {} ;
 
+    const populateMenuItems = req.query.populateMenuItems;
     try {
-        const orders = await Order.find(queryFilter);
+        let query = Order.find(queryFilter);
+        
+        if (populateMenuItems) {
+            query = query.populate({
+                path: 'items.menuItemId',
+                model: 'MenuItem'
+            })
+        }
+
+        // const orders = await Order.find(queryFilter).populate({
+        //     path: 'items.menuItemId',
+        //     model: 'MenuItem'
+        // })
+        const orders = await query;
+        
         let successMsg = "Orders found succesfully";
         successMsg += userId ? " by user ID" : "";
         return res.status(200).json({ success: successMsg, orders })
