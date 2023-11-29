@@ -2,15 +2,22 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const ROLES = require('../config/roles');
 
-const getUserById = async (req, res) => {
+const getUserByIdOrPhone = async (req, res) => {
     const id = req.params.id; 
+    const idIsPhoneNumber = req.query.byPhone;
+
     console.log("REQUESTER ROLE => ", req.user.role); 
 
     const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) return res.status(400).json({ error: "The given id is not a valid ObjectId" });
+    if (!isValidId && !idIsPhoneNumber) return res.status(400).json({ error: "The given id is not a valid ObjectId" });
 
     try {
-        const user = await User.findById(id);
+        let user = null;
+        if (idIsPhoneNumber) {
+            user = await User.findByPhoneNumber(id);
+        } else {
+            user = await User.findById(id);
+        }
         if (!user) return res.status(404).json({error: "User not found"});
         
         const gettingOwnAccount = user._id.toString() === req.user._id.toString();
@@ -156,7 +163,7 @@ const updateUserById = async (req, res) => {
 }
 
 module.exports = {
-    getUserById,
+    getUserByIdOrPhone,
     getAllUsers,
     deleteUserById,
     updateUserById,

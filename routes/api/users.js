@@ -16,7 +16,7 @@ const allowedRoles = {
 }
 
 router.route('/:id')
-    .get(allowedRoles.GET_id, usersController.getUserById)
+    .get(allowedRoles.GET_id, usersController.getUserByIdOrPhone)
     .delete(allowedRoles.DELETE_id, usersController.deleteUserById)
     .put(usersController.updateUserById)
 
