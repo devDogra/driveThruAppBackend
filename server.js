@@ -11,6 +11,11 @@ const cors = require('cors');
 const verifyJWT = require('./middleware/verifyJWT');
 const allowRoles = require('./middleware/allowRoles'); 
 const addImagesToMenuItemsInDB = require('./dbscripts/addImagesToMenuItemsInDB'); 
+const { saltRounds } = require('./config/bcryptConfig.json');
+const populateAccounts = require('./dbscripts/populateAccounts');
+const populateMenuItems = require('./dbscripts/populateMenuItems');
+const populateOrders = require('./dbscripts/populateOrders');
+
 
 const PORT = process.env.PORT || 3500; 
 const DB_URI = process.env.DB_URI;
@@ -96,89 +101,20 @@ async function main() {
         })
 
         /* ----------------------------- TEST DB MODELS/RUN SCRIPTS --------------- */
-        // await addImagesToMenuItemsInDB();
+        // Create sample users
+        const User = mongoose.model("User")
+        await User.deleteMany({}); 
+        await populateAccounts();
+        
+        // Create menu items
+        const MenuItem = mongoose.model("MenuItem");
+        await MenuItem.deleteMany({});
+        await populateMenuItems();
+        
+        const Order = mongoose.model("Order"); 
+        await Order.deleteMany({});
+        await populateOrders();  
         /* -------------------------------------------------------------------------- */
-        
-        // const order = await Order.findOne(); 
-        // const cancel = order.cancellationDeadlineDate; 
-        // const curr = new Date();
-        // if (curr > cancel) {
-        //     console.log("Cant be cancelled"); 
-        // } else {
-        //     console.log("CAN be cancelled"); 
-        // }
-        // console.log(cancel); 
-        // const creationDate = new Date(order.createdAt);
-        // const cancellationDeadlineDate = dateFns.addMinutes(creationDate, 5);
-        // console.log(creationDate, typeof creationDate); 
-        // console.log(cancellationDeadlineDate, typeof cancellationDeadlineDate); 
-
-        // await User.deleteMany({});
-        // await MenuItem.deleteMany({});
-        // await Order.deleteMany({});
-
-
-        // const user = new User({
-        //     firstName: "Dev",
-        //     phone: 9811061693,
-        //     role: ROLES.Admin,
-        // })
-
-        // await user.save();
-
-
-        // const test = new User({
-        //     firstName: "testEmp",
-        //     lastName: "testEmp",
-        //     phone: 1234567890,
-        //     role: ROLES.Employee,
-        // });
-
-        // await test.save();
-        // // const invalidPhone = new User({
-        // //     firstName: "testInvalidPhone",
-        // //     lastName: "testInvalidPhone",
-        // //     phone: 12345678,
-        // //     role: ROLES.Employee,
-        // // });
-        
-        // // await invalidPhone.save(); 
-
-        // const burger = new MenuItem({
-        //     name: "Burger",
-        //     price: 120,
-        //     itemNumber: 1,
-        // })
-
-        // const pepsi = new MenuItem({
-        //     name: "Pepsi",
-        //     price: 50,
-        //     itemNumber: 2,
-        // })
-
-        // await burger.save();
-        // await pepsi.save(); 
-
-
-        // const menuItemIds = (await MenuItem.where()).map(mi => mi._id);
-        // console.log({menuItemIds}); 
-
-        // const [burgerId, pepsiId] = menuItemIds; 
-
-        // const order = new Order({
-        //     items: [
-        //         {
-        //             menuItemId: burgerId,
-        //             quantity: 3,
-        //         },
-        //         {
-        //             menuItemId: pepsiId,
-        //             quantity: 1,
-        //         }
-        //     ],
-        //     customerId: user._id, 
-        // })
-        // await order.save()
     
         /* -------------------------------------------------------------------------- */
 
