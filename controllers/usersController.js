@@ -145,7 +145,7 @@ const updateUserById = async (req, res) => {
                 }
             }   
             
-            if (req.user.role == ROLES.Admin) {
+            if (req.user.role == ROLES.Admin && updatingOwnAccount) {
                 if (updatedRole != ROLES.Admin) {
                     return res.status(403).json({ error: `${ROLES.Admin}s cannot demote themselves to a lower role`})
                 }
