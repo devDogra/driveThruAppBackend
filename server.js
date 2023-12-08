@@ -53,7 +53,8 @@ const routers = {
     orders: require("./routes/api/orders"),
     login: require("./routes/api/login"),
     refreshToken: require('./routes/api/refreshToken'),
-    validate: require('./routes/api/validate')
+    validate: require('./routes/api/validate'),
+    uploadImage: require('./routes/api/uploadImage')
 }
 
 app.use((req, res, next) => {
@@ -74,6 +75,7 @@ app.use(verifyJWT);
 app.use('/users', routers.users);
 app.use('/orders', routers.orders);
 app.use('/validate', routers.validate); // Check if user is logged in 
+app.use('/uploadImage', routers.uploadImage);
 
 app.use('/protected', (req, res) => {
     return res.send("I am protected and can only be accessed by users with a valid AccJWT"); 
